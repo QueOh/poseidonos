@@ -20,6 +20,8 @@ jobs:
     displayName: 'Build Packages'
   - script: ./poseidonos/script/build_ibofos.sh
     displayName: 'Build libraries'
+  - script: ls
+    displayName: 'ls'
 
 - job: test1
   dependsOn: build
