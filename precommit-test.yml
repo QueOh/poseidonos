@@ -1,0 +1,36 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+parameters:
+- name: succeed
+  displayName: Succeed or fail
+  type: boolean
+  default: false
+
+pr:
+- main
+
+pool: pos_vm_0
+
+jobs:
+- job: build
+  steps:
+  - script: ./poseidonos/script/pkgdep.sh
+    displayName: 'Build Packages'
+  - script: ./poseidonos/script/build_ibofos.sh
+    displayName: 'Build libraries'
+
+- job: test1
+  dependsOn: build
+  condition: succeed()
+  steps:
+  - script: ./poseidonos/bin/poseidonos
+    displayName: 'Run POS1'
+
+- job: test2
+  dependsOn: build
+  condition: succeed()
+  steps:
+  - script: ./poseidonos/bin/poseidonos
+    displayName: 'Run POS2'
