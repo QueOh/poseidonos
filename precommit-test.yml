@@ -84,6 +84,7 @@ stages:
 - stage : precommit_test
   displayName : binary test
   dependsOn : [ build_pos_binary ]
+  pool: pos_vm_hs
   jobs :
   - job : test_1
     steps:
