@@ -70,15 +70,15 @@ stages:
       steps:
       - script : | 
           cmake .
-        workingDirectory: $(System.DefaultWorkingDirectory/test/ 
+        workingDirectory: $(System.DefaultWorkingDirectory)/test/ 
         displayName: 'Cmake for unit test'
       - script : |
           make -j 8
-        workingDirectory: $(System.DefaultWorkingDirectory/test/ 
+        workingDirectory: $(System.DefaultWorkingDirectory)/test/ 
         displayName: 'make for unit test'
       - script : |
           make run_basic_tests
-        workingDirectory: $(System.DefaultWorkingDirectory/test/ 
+        workingDirectory: $(System.DefaultWorkingDirectory)/test/ 
         displayName: 'run unit test'
       
 - stage : precommit_test
