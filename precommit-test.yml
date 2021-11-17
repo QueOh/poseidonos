@@ -23,7 +23,6 @@ jobs:
 
 - job: test1
   dependsOn: build
-  condition: succeed()
   steps:
   - script: ./poseidonos/bin/poseidonos
     displayName: 'Run POS1'
