@@ -68,6 +68,16 @@ stages:
   jobs:
     - job : unit_test
       steps:
+      - script: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential python wget libssl-dev libaio-dev vim git --fix-missing
+        displayName: 'update apt and install build tool'
+
+      - script: |
+          sudo ./pkgdep.sh
+        workingDirectory: $(System.DefaultWorkingDirectory)/script
+        displayName: 'Download required packages'
+        
       - script : | 
           cmake .
         workingDirectory: $(System.DefaultWorkingDirectory)/test/ 
