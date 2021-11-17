@@ -8,8 +8,7 @@ trigger:
 
 pr: [ main ]
 
-pool:
-  vmImage: ubuntu-latest
+pool: pos_vm_hs
 
 steps:
 - script: echo Hello, world!
