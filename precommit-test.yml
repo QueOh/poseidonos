@@ -9,28 +9,85 @@ parameters:
   default: false
 
 pr:
-- main
+ branches:
+   include:
+     - main
 
 pool: pos_vm_0
 
-jobs:
-- job: build
-  steps:
-  - script: ls
-    displayName: 'ls'
-  - script: ./poseidonos/script/pkgdep.sh
-    displayName: 'Build Packages'
-  - script: ./poseidonos/script/build_ibofos.sh
-    displayName: 'Build libraries'
+stages:
+- stage : build_pos_binary
+  displayName: build binary
+  dependsOn : []
+  jobs:
+    - job: build
+      steps:
+      - script: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential python wget libssl-dev libaio-dev vim git --fix-missing
+        displayName: 'update apt and install build tool'
 
-- job: test1
-  dependsOn: build
-  steps:
-  - script: ./poseidonos/bin/poseidonos
-    displayName: 'Run POS1'
+      - script: |
+          sudo ./pkgdep.sh
+        workingDirectory: $(System.DefaultWorkingDirectory)/script
+        displayName: 'Download required packages'
 
-- job: test2
-  dependsOn: build
-  steps:
-  - script: ./poseidonos/bin/poseidonos
-    displayName: 'Run POS2'
+      - script: |
+          sudo ./build_lib.sh
+        workingDirectory: $(System.DefaultWorkingDirectory)/lib
+        displayName: 'Build dependent libraries'
+
+      - script: |
+          sudo ./configure
+        workingDirectory: $(System.DefaultWorkingDirectory)/
+        displayName: 'Configure src'
+
+      - script: |
+          sudo make -j 8
+        workingDirectory: $(System.DefaultWorkingDirectory)/
+        displayName: 'Build src'
+        
+      - script: |
+          sudo cmake .
+        workingDirectory: $(System.DefaultWorkingDirectory)/test
+        displayName: 'Configure test'
+
+      - script: |
+          sudo make -j 8
+        workingDirectory: $(System.DefaultWorkingDirectory)/test
+        displayName: 'Build test'
+
+      - script: |
+          sudo rm -fr *
+        workingDirectory: $(System.DefaultWorkingDirectory)/
+        displayName: 'Clean up'
+
+- stage : pos_unit_test
+  displayName : build unit test
+  dependsOn : []
+  jobs:
+    - job : unit_test
+      steps:
+      - script : | 
+          cmake .
+        workingDirectory: $(System.DefaultWorkingDirectory/test/ 
+        displayName: 'Cmake for unit test'
+      - script : |
+          make -j 8
+        workingDirectory: $(System.DefaultWorkingDirectory/test/ 
+        displayName: 'make for unit test'
+      - script : |
+          make run_basic_tests
+        workingDirectory: $(System.DefaultWorkingDirectory/test/ 
+        displayName: 'run unit test'
+      
+- stage : precommit_test
+  displayName : binary test
+  dependsOn : [ build_pos_library ]
+  jobs :
+  - job : test_1
+    steps:
+    - script : echo "test_1"
+  - job : test_2
+    steps:
+    - script : echo "test_2"
