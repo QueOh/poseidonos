@@ -15,7 +15,7 @@ jobs:
       - name: init
         run: |
             echo "Clean up"
-            sudo rm -fr *
+            sudo rm -fr bin
         working-directory: ${{github.workspace}})/
       - uses: actions/checkout@v2
       - run: | 
