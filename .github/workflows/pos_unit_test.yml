@@ -1,0 +1,32 @@
+name: pos_unit_test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  pos_unit_test:
+    runs-on: [linux, self_hosted, x64, so3]
+    defaults:
+      run:
+        shell: bash
+    steps:
+    - uses: actions/checkout@v2
+    - name: update apt and install build tool
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential python wget libssl-dev libaio-dev vim git --fix-missing
+    - name: Download required packages
+      run: sudo ./pkgdep.sh
+      working-directory: ${{github.workspace}}/script
+    - name: Cmake for unit test
+      run: cmake .
+      working-directory: ${{github.workspace}}/test/
+    - name: make for unit test
+      run: make -j 8
+      working-directory: ${{github.workspace}}/test/
+    - name: run unit test
+      run: make run_basic_tests
+      working-directory: ${{github.workspace}}/test/
