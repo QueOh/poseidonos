@@ -59,8 +59,10 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v2
-      - run : mkdir ${{github.workspace}}/bin
+      - name : checkout repo
+        uses: actions/checkout@v2
+      - name : make bin directory
+        run : sudo mkdir ${{github.workspace}}/bin
       - name: getbinary
         uses: actions/download_artifact@v2
         with:
@@ -77,8 +79,10 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v2
-      - run : mkdir ${{github.workspace}}/bin
+      - name : checkout repo
+        uses: actions/checkout@v2
+      - name : make bin directory
+        run : sudo mkdir ${{github.workspace}}/bin
       - name: getbinary
         uses: actions/download_artifact@v2
         with:
