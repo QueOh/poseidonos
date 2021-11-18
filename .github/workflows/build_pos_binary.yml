@@ -59,10 +59,12 @@ jobs:
       run:
         shell: bash
     steps:
+      - run : echo "checkout repo"
       - name : checkout repo
         uses: actions/checkout@v2
       - name : make bin directory
         run : sudo mkdir ${{github.workspace}}/bin
+      - run : echo "download artifact"
       - name: getbinary
         uses: actions/download_artifact@v2
         with:
