@@ -1,0 +1,54 @@
+name: build_pos_binary
+on:
+  pull_request:
+    branches:
+      - main 
+env:
+  BUILD_TYPE: Release
+jobs:
+  build:
+    name: build
+    runs-on: [linux, self-hosted, x64]
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: buld 
+      - run: | 
+          echo "update apt and install build tool"
+          sudo apt-get update
+          sudo apt-get install -y build-essential python wget libssl-dev libaio-dev vim git --fix-missing
+      - run: |
+          echo "Download required packages"
+          sudo ./pkgdep.sh
+        working-directory: ${{github.workspace}}/script
+
+      - run: |
+          echo "Build dependent libraries"
+          sudo ./build_lib.sh
+        working-directory: ${{github.workspace}}/lib
+
+      - run: |
+          echo "Configure src"
+          sudo ./configure
+        working-directory: ${{github.workspace}}/
+
+      - run: |
+          echo "Build src"
+          sudo make -j 8
+        working-directory: ${{github.workspace}}/
+        
+      - run: |
+          echo "Configure test"
+          sudo cmake .
+        working-directory: ${{github.workspace}}/test
+
+      - run: |
+          echo "Build test"
+          sudo make -j 8
+        working-directory: ${{github.workspace}}/test
+
+      - run: |
+          echo "Clean up"
+          sudo rm -fr *
+        working-directory: ${{github.workspace}})/
