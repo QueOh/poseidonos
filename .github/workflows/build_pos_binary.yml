@@ -51,3 +51,40 @@ jobs:
       - run: |
           echo "Clean up"
           sudo rm -rf ${{github.workspace}}/*
+  nportest:
+    name: npor_test
+    needs: [build]
+    runs-on: [so0]
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v2
+      - name: getbinary
+        uses: actions/download_artifact@v2
+        with:
+          name: pos_binary
+          path: ${{github.workspace}}/bin
+      - name: test
+        run: ./npor_test.sh -f 127.0.0.1
+        working-directory: ${{github.workspace}}/test/regression
+  sportest:
+    name: spor_test
+    needs: [build]
+    runs-on: [so0]
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v2
+      - name: getbinary
+        uses: actions/download_artifact@v2
+        with:
+          name: pos_binary
+          path: ${{github.workspace}}/bin
+      - name: test
+        run: ./spor_test.sh -f 127.0.0.1
+        working-directory: ${{github.workspace}}/test/regression
+
+
+
