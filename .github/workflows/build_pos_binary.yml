@@ -60,6 +60,7 @@ jobs:
         shell: bash
     steps:
       - uses: actions/checkout@v2
+      - run : mkdir ${{github.workspace}}/bin
       - name: getbinary
         uses: actions/download_artifact@v2
         with:
@@ -77,6 +78,7 @@ jobs:
         shell: bash
     steps:
       - uses: actions/checkout@v2
+      - run : mkdir ${{github.workspace}}/bin
       - name: getbinary
         uses: actions/download_artifact@v2
         with:
