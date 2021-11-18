@@ -7,7 +7,7 @@ env:
 jobs:
   build:
     name: build
-    runs-on: [linux, self-hosted, x64, so2]
+    runs-on: [so0]
     defaults:
       run:
         shell: bash
@@ -35,7 +35,7 @@ jobs:
 
       - run: |
           echo "Build src"
-          sudo make -j 8
+          sudo make -j 40
         working-directory: ${{github.workspace}}/
         
       - run: |
@@ -45,8 +45,15 @@ jobs:
 
       - run: |
           echo "Build test"
-          sudo make -j 8
+          sudo make -j 40
         working-directory: ${{github.workspace}}/test
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: pos_binary
+          path: |
+            ${{github.workspace}}/bin/*
 
       - run: |
           echo "Clean up"
