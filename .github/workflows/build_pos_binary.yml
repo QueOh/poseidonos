@@ -40,17 +40,7 @@ jobs:
           echo "Build src"
           sudo make -j 40
         working-directory: ${{github.workspace}}/
-        
-      - run: |
-          echo "Configure test"
-          sudo cmake .
-        working-directory: ${{github.workspace}}/test
-
-      - run: |
-          echo "Build test"
-          sudo make -j 40
-        working-directory: ${{github.workspace}}/test
-
+   
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
@@ -60,5 +50,4 @@ jobs:
 
       - run: |
           echo "Clean up"
-          sudo rm -fr *
-        working-directory: ${{github.workspace}})/
+          sudo rm -rf ${{github.workspace}}/*
