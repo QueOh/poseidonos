@@ -19,6 +19,8 @@ jobs:
     runs-on: [self-hosted, linux, x64]
 
     steps:
+    - name: Remove previous binary
+      run: sudo rm -rf ${{github.workspace}}
     - uses: actions/checkout@v2
 
     - name: Update apt
