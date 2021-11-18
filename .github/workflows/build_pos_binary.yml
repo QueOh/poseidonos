@@ -8,7 +8,7 @@ env:
 jobs:
   build:
     name: build
-    runs-on: [linux, self-hosted, x64]
+    runs-on: [linux, self-hosted, x64, so3]
     defaults:
       run:
         shell: bash
