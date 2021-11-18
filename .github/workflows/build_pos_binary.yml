@@ -12,6 +12,11 @@ jobs:
       run:
         shell: bash
     steps:
+      - name: init
+        run: |
+            echo "Clean up"
+            sudo rm -fr *
+        working-directory: ${{github.workspace}})/
       - uses: actions/checkout@v2
       - run: | 
           echo "update apt and install build tool"
