@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: init
         run: |
-            sudo rm -rf ${{github.workspace}}/lib ${{github.workspace}}/bin
+            sudo rm -rf ${{github.workspace}}/*
       - uses: actions/checkout@v2
       - run: | 
           echo "update apt and install build tool"
