@@ -20,7 +20,7 @@ jobs:
 
     steps:
     - name: Remove previous binary
-      run: sudo rm -rf ${{github.workspace}}
+      run: sudo rm -rf ${{github.workspace}}/lib; sudo rm -rf ${{github.workspace}}/bin
     - uses: actions/checkout@v2
 
     - name: Update apt
