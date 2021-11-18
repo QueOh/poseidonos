@@ -13,7 +13,6 @@ jobs:
       run:
         shell: bash
     steps:
-      - name: build
       - uses: actions/checkout@v2
       - run: | 
           echo "update apt and install build tool"
