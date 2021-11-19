@@ -36,6 +36,8 @@ jobs:
       - run : echo "checkout repo"
       - name : checkout repo
         uses: actions/checkout@v2
+        with:
+          ref : main
       - name : make bin directory
         run : sudo mkdir ${{github.workspace}}/bin
       - run : echo "download artifact"
@@ -55,6 +57,8 @@ jobs:
     steps:
       - name : checkout repo
         uses: actions/checkout@v2
+        with:
+          ref : main
       - name : make bin directory
         run : sudo mkdir ${{github.workspace}}/bin
       - name: getbinary
