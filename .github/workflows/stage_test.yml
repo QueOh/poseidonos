@@ -36,13 +36,11 @@ jobs:
       - run : echo "checkout repo"
       - name : checkout repo
         uses: actions/checkout@v2
-        with:
-          ref : main
       - name : make bin directory
         run : sudo mkdir ${{github.workspace}}/bin
       - run : echo "download artifact"
       - name: getbinary
-        uses: actions/download_artifact@v2
+        uses: aochmann/actions-download-artifact@1.0.4
         with:
           name: pos_binary
           path: ${{github.workspace}}/
@@ -57,12 +55,10 @@ jobs:
     steps:
       - name : checkout repo
         uses: actions/checkout@v2
-        with:
-          ref : main
       - name : make bin directory
         run : sudo mkdir ${{github.workspace}}/bin
       - name: getbinary
-        uses: actions/download_artifact@v2
+        uses: aochmann/actions-download-artifact@1.0.4
         with:
           name: pos_binary
           path: ${{github.workspace}}/
