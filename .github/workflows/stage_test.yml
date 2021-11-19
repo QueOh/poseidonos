@@ -45,6 +45,7 @@ jobs:
           name: pos_binary
           path: ${{github.workspace}}/bin
       - run : ls ${{github.workspace}}/bin
+        if: always()
   sportest:
     name: spor_test
     needs: [build]
@@ -57,11 +58,13 @@ jobs:
         uses: actions/checkout@v2
       - name : make bin directory
         run : sudo mkdir ${{github.workspace}}/bin
+      - run : sudo chmod 775 {{github.workspace}}/bin
       - name: getbinary
         uses: aochmann/actions-download-artifact@1.0.4
         with:
           name: pos_binary
-          path: ${{github.workspace}}/
-      - run : ls ${{github.workspace}}
+          path: ${{github.workspace}}/bin
+      - run : ls ${{github.workspace}}/bin
+        if: always()
 
 
