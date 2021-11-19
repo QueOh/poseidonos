@@ -1,4 +1,4 @@
-name: build_pos_binary
+name: stage test
 on:
   push:
     branches: [ main ]
@@ -7,7 +7,7 @@ env:
 jobs:
   build:
     name: build
-    runs-on: ubuntu-lastest
+    runs-on: ubuntu-18.04
     defaults:
       run:
         shell: bash
@@ -28,7 +28,7 @@ jobs:
   nportest:
     name: npor_test
     needs: [build]
-    runs-on: ubuntu-lastest
+    runs-on: ubuntu-18.04
     defaults:
       run:
         shell: bash
@@ -48,7 +48,7 @@ jobs:
   sportest:
     name: spor_test
     needs: [build]
-    runs-on: ubuntu-lastest
+    runs-on: ubuntu-18.04
     defaults:
       run:
         shell: bash
