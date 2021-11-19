@@ -1,0 +1,67 @@
+name: build_pos_binary
+on:
+  push:
+    branches: [ main ]
+env:
+  BUILD_TYPE: Release
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-lastest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: init
+        run: |
+            sudo rm -rf ${{github.workspace}}/*
+      - uses: actions/checkout@v2
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: pos_binary
+          path: |
+            ${{github.workspace}}/Makefile
+      - run: |
+          echo "Clean up"
+          sudo rm -rf ${{github.workspace}}/*
+  nportest:
+    name: npor_test
+    needs: [build]
+    runs-on: ubuntu-lastest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - run : echo "checkout repo"
+      - name : checkout repo
+        uses: actions/checkout@v2
+      - name : make bin directory
+        run : sudo mkdir ${{github.workspace}}/bin
+      - run : echo "download artifact"
+      - name: getbinary
+        uses: actions/download_artifact@v2
+        with:
+          name: pos_binary
+          path: ${{github.workspace}}/
+      - run : ls ${{github.workspace}}
+  sportest:
+    name: spor_test
+    needs: [build]
+    runs-on: ubuntu-lastest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name : checkout repo
+        uses: actions/checkout@v2
+      - name : make bin directory
+        run : sudo mkdir ${{github.workspace}}/bin
+      - name: getbinary
+        uses: actions/download_artifact@v2
+        with:
+          name: pos_binary
+          path: ${{github.workspace}}/
+      - run : ls ${{github.workspace}}
+
+
