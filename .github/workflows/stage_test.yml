@@ -43,8 +43,8 @@ jobs:
         uses: aochmann/actions-download-artifact@1.0.4
         with:
           name: pos_binary
-          path: ${{github.workspace}}/
-      - run : ls ${{github.workspace}}
+          path: ${{github.workspace}}/bin
+      - run : ls ${{github.workspace}}/bin
   sportest:
     name: spor_test
     needs: [build]
