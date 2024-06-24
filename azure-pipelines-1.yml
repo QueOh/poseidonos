@@ -6,7 +6,7 @@
 trigger:
 - main
 
-pool: vmssagentspool
+pool: pos_vm_0
 
 steps:
 - script: echo Hello, world!
